@@ -19,38 +19,42 @@
 </br>
 </br>
 </br>
+
     <div style="column-count: 2; text-align: center;">
-        <input type="checkbox" id="math" name="math" value="math">
-        <label for="math"> Math</label><br>
-
-        <input type="checkbox" id="anglais" name="anglais" value="anglais">
-        <label for="anglais"> Anglais</label><br>
-
-        <input type="checkbox" id="EC" name="EC" value="EC">
-        <label for="EC"> EC</label><br>
-
-        <input type="checkbox" id="EGOD" name="EGOD" value="EGOD">
-        <label for="EGOD"> EGOD</label><br>
-
-        <input type="checkbox" id="ASR" name="ASR" value="ASR">
-        <label for="EGOD"> ASR</label><br>
-
-        <input type="checkbox" id="ACDA" name="ACDA" value="ACDA">
-        <label for="ACDA"> ACDA</label><br>
-
-        <input type="checkbox" id="SGBD" name="SGBD" value="SGBD">
-        <label for="SGBD"> SGBD</label><br>
-
-        <input type="checkbox" id="APL" name="APL" value="APL" onclick="isCheckboxAreEmpty()">
-        <label for="APL" > APL</label><br>
+        <form name="checkbox_matiere">
+            <input type="checkbox" id="math" name="math" value="math">
+            <label for="math"> Math</label><br>
+    
+            <input type="checkbox" id="anglais" name="anglais" value="anglais">
+            <label for="anglais"> Anglais</label><br>
+    
+            <input type="checkbox" id="EC" name="EC" value="EC">
+            <label for="EC"> EC</label><br>
+    
+            <input type="checkbox" id="EGOD" name="EGOD" value="EGOD">
+            <label for="EGOD"> EGOD</label><br>
+    
+            <input type="checkbox" id="ASR" name="ASR" value="ASR">
+            <label for="EGOD"> ASR</label><br>
+    
+            <input type="checkbox" id="ACDA" name="ACDA" value="ACDA">
+            <label for="ACDA"> ACDA</label><br>
+    
+            <input type="checkbox" id="SGBD" name="SGBD" value="SGBD">
+            <label for="SGBD"> SGBD</label><br>
+    
+            <input type="checkbox" id="APL" name="APL" value="APL">
+            <label for="APL" > APL</label><br>
+        </form>
+        
 
         
         
       </div>
 
-      <form action="" method="post" style="text-align: center;">
-		<input type="submit" name="recherche" value="Lancer la recherche" >
-    </form>
+      <button onclick="getCheckbox()" style="text-align: center;">
+        <p>afficher le résultat</p>
+      </button>
     
 </body>
 </html>

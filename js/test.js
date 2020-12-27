@@ -1,57 +1,77 @@
 var votant =[];//Tableau qui vas contenir toutes les personnes peut importes si elles ont votés
 
 propOwnLogin = Object.getOwnPropertyNames(logins);//Récupère le nombre de potentiel votant
-console.log("Nombre de votant " + propOwnLogin.length); //Affichage du nombre de votant
+//console.log("Nombre de votant " + propOwnLogin.length); //Affichage du nombre de votant
 
 
 for(let index = 0; index < propOwnLogin.length; index++) 
 {
     votant.push(propOwnLogin[index]);//On ajoute les votant dans le tableau
-    console.log(index + ": " +votant[index]);//Affichage des votants
+    //console.log(index + ": " +votant[index]);//Affichage des votants
 }
 
-console.log(typeof votant[111]);//String
-console.log(typeof votes.saleh);//Object
+//console.log(typeof votant[111]);//String
+//console.log(typeof votes.saleh);//Object
 //A faire : pouvoir convertir un type string en Object pour pouvoir concaténer avec toutes les données qu'on a dans le tableau votant
-console.log(Object.keys(votes.saleh));
-console.log(Object.values(votes.saleh.ACDA));
+//console.log(Object.keys(votes.saleh));
+//console.log(Object.values(votes.saleh.ACDA));
+var matiere_coche = [];
+
+
+/*
+*Cette fonction permet de recuperer les checkbox (matiere) qui ont été coché par l'utilisateur
+*Elle stocke ensuite toutes les matieres coché dans un tableau qui est commun à tout le programme
+*/
+function getCheckbox()
+{
+    var list_check_box = document.getElementsByTagName('input');//On recupere tout les elements contenant la balise input
+    console.log("nombre de checkbox : " +list_check_box.length);
+    for (var i = 0; i < list_check_box.length; i++) 
+    {
+        var matiere = list_check_box[i];//On stock à chaque fois le nom de l'input à l'indice i dans matiere
+     
+        if (matiere.getAttribute('type') == 'checkbox') 
+        {
+            //On verifie que ce qui est stocké est un checkbox
+            console.log(matiere.value);//Si condition est valide alors on l'affiche dans la console (debug)
+        }
+        if (list_check_box[i].checked == true)//On verifie si la checkbox est coché
+        {
+            //console.log("ok");
+            matiere_coche[i] = matiere.value;//On le stock dans un tableau que l'on pourra réutiliser plus tard
+        }
+     
+    } 
+    debug();
+}
+
+function debug()//Fonction de débugage
+{
+    console.log("matiere coche : " + matiere_coche);
+}
 
 
 
-
-
-//Formule mathématique pour faire le classement
-//Brouillon 
-var user1;
-var user2;
-var user3;
-var user4;
-//Chaque user possède un tableau contenant les users qui on voté pour lui
-
-var usersPoint = [user1 =[user1,user3,user4,user2],user2 = [user1,user4],user3 = [user1,user2],user4 = [user3]];//Tableau qui contient les tableaux de vote de tout les users
-//user1 = 3        user2 = 2           user3 = 2         user4 = 1
-var tableauDePoint = [];//Initialisation du tableau de point
-var tableauClassement = [];//Initialisation du tableau de classement
-
-for (let index = 0; index < usersPoint.length; index++) {
-    tableauDePoint[index] = usersPoint[index].length;//On met dans le tableau de point le nombre de votes reçu par chaque user dans l'ordre 1-4
-    var id = index +1;//Sert seulement pour l'affichage
-    console.log("User"+id+" : "+tableauDePoint[index]);//Debugage des valeurs
-    for (let index2 = 0; index2 < tableauDePoint.length; index2++) {
-        var buf = tableauDePoint[index];
-        
-        
+class Votant{
+    constructor(nom,vote_recu,vote_emis,vote = [])
+    {
+        this.nom = nom;
+        this.vote_recu = vote_recu;
+        this.vote_emis = vote_emis;
+        this.vote = vote;
     }
 
-}
-
-for (let index = 0; index < usersPoint.length; index++) {
-    console.log(index + " --+ " + usersPoint[index].includes(user1));//Test : Est supposé vérifier si ça contient un user
-
-    
     
 }
 
+function getVoteRecu(Votant) {
+        
+    return Votant.vote_recu;
+}
+
+function getVoteEmis(Votant) {
+    return Votant.vote_emis;
+}
 
 
  

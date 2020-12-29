@@ -34,7 +34,7 @@ function getCheckbox()
         if (matiere.getAttribute('type') == 'checkbox') 
         {
             //On verifie que ce qui est stocké est un checkbox
-            console.log(matiere.value);//Si condition est valide alors on l'affiche dans la console (debug)
+            //console.log(matiere.value);//Si condition est valide alors on l'affiche dans la console (debug)
         }
         if (list_check_box[i].checked == true)//On verifie si la checkbox est coché
         {
@@ -62,17 +62,9 @@ function clear() // Fonction de nettoyage du tableau des cases cochées
 
 
 
-class Votant{
-    constructor(nom,vote_recu,vote_emis,vote = [])
-    {
-        this.nom = nom;
-        this.vote_recu = vote_recu;
-        this.vote_emis = vote_emis;
-        this.vote = vote;
-    }
 
-    
-}
+
+
 
 function getVoteRecu(Votant) {
         
@@ -85,3 +77,15 @@ function getVoteEmis(Votant) {
 
 
  
+
+/*
+class Votant{
+    constructor(nom,vote_recu,vote_emis,vote = [])
+    {
+        this.nom = nom;
+        this.vote_recu = vote_recu;
+        this.vote_emis = vote_emis;
+        this.vote = vote;
+    }
+}
+*/

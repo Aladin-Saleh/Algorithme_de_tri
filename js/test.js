@@ -24,6 +24,7 @@ var matiere_coche = [];
 */
 function getCheckbox()
 {
+    clear();
     var list_check_box = document.getElementsByTagName('input');//On recupere tout les elements contenant la balise input
     console.log("nombre de checkbox : " +list_check_box.length);
     for (var i = 0; i < list_check_box.length; i++) 
@@ -38,6 +39,7 @@ function getCheckbox()
         if (list_check_box[i].checked == true)//On verifie si la checkbox est coché
         {
             //console.log("ok");
+            //console.log("Matière : " + matiere.value);
             matiere_coche[i] = matiere.value;//On le stock dans un tableau que l'on pourra réutiliser plus tard
         }
      
@@ -47,7 +49,15 @@ function getCheckbox()
 
 function debug()//Fonction de débugage
 {
-    console.log("matiere coche : " + matiere_coche);
+    console.table("matiere coche : " + matiere_coche);
+}
+
+function clear() // Fonction de nettoyage du tableau des cases cochées
+{
+    for(;matiere_coche.length != 0;) // Tant que le tableau n'est pas vide
+    {
+        matiere_coche.pop(); // On enlève le dernier élément de ce dernier
+    }
 }
 
 

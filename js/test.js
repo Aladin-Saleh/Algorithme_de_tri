@@ -3,7 +3,7 @@ var votant =[];//Tableau qui vas contenir toutes les personnes peut importes si 
 propOwnLogin = Object.getOwnPropertyNames(logins);//Récupère le nombre de potentiel votant
 //console.log("Nombre de votant " + propOwnLogin.length); //Affichage du nombre de votant
 
-
+console.log(logins);
 for(let index = 0; index < propOwnLogin.length; index++) 
 {
     votant.push(propOwnLogin[index]);//On ajoute les votant dans le tableau

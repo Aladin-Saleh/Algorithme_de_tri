@@ -37,34 +37,115 @@ private $mat = array();
     switch ($matiere) 
     {
       case 'ACDA':
-        $acda[] = $vote;
+        $i = 0;
+        if ($this->acda[$i] != null) {
+          $i++;
+          echo $i;
+          echo "<br>";
+        }
+        else
+        {
+          $this->acda[$i] = $vote;
+        }
         break;
       case 'APL':
-        $apl[] = $vote;
+        $i = 0;
+        if($this->apl[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $apl[$i] = $vote;
+        }
         break;
       case 'ASR':
-        $asr[] = $vote;
+        $i = 0;
+        if($this->asr[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $asr[$i] = $vote;
+        }
         break;
       case 'ANG':
-        $ang[] = $vote;
+        $i = 0;
+        if($this->ang[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $ang[$i] = $vote;
+        }
         break;  
       case 'ART':
-        $art[] = $vote;
+        $i = 0;
+        if($this->art[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $art[$i] = $vote;
+        }
         break;
       case 'EC':
-        $ec[] = $vote;
+        $i = 0;
+        if($this->ec[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $ec[$i] = $vote;
+        }
         break;
       case 'EGOD':
-        $egod[] = $vote;
+        $i = 0;
+        if($this->egod[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $egod[$i] = $vote;
+        }
         break;
       case 'MAT':
-        $mat[] = $vote;
+        $i = 0;
+        if($this->mat[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $mat[$i] = $vote;
+        }
         break;  
       case 'SGBD':
-        $sgbd[] = $vote;
+        $i = 0;
+        if($this->sgbd[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $sgbd[$i] = $vote;
+        }
         break;
       case 'SPORT':
-        $sport[] = $vote;
+        $i = 0;
+        if($this->sport[$i] != null)
+        {
+          $i++;
+        }
+        else
+        {
+        $sport[$i] = $vote;
+        }
         break;
           
       
@@ -105,7 +186,7 @@ return $array_votant;
 }
 
 
-function getInfoVote()
+function setInfoVote()
 {
   echo "Start php function.<br>";
   
@@ -134,13 +215,11 @@ function getInfoVote()
           echo "<br>";
           for ($k=0; $k < count($obj->$test->$mat) ; $k++) 
           { 
-            $votant[$i]->setClass($mat,$mat[$k]);
+            $votant[$i]->setClass($mat,$obj->$test->$mat[$k]);
             echo $obj->$test->$mat[$k];
             echo "<br>";
           }
-          echo "gettttttttttttttttttttttttttttttttttttttttttttttttt<br>";
-          echo $votant[$i]->getAcda();
-         
+          
          
         }
         else
@@ -155,19 +234,12 @@ function getInfoVote()
 
   }
  
-
- 
-    
-
-  
-
- 
 }
 
 
 
 
-getInfoVote();
+setInfoVote();
 ?>
 
 

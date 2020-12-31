@@ -37,41 +37,46 @@ private $mat = array();
     switch ($matiere) 
     {
       case 'ACDA':
-        array_push($acda,$vote);
+        $acda[] = $vote;
         break;
       case 'APL':
-        array_push($apl,$vote);
+        $apl[] = $vote;
         break;
       case 'ASR':
-        array_push($asr,$vote);
+        $asr[] = $vote;
         break;
       case 'ANG':
-        array_push($ang,$vote);
+        $ang[] = $vote;
         break;  
       case 'ART':
-          array_push($art,$vote);
-          break;
+        $art[] = $vote;
+        break;
       case 'EC':
-          array_push($ec,$vote);
-          break;
+        $ec[] = $vote;
+        break;
       case 'EGOD':
-        array_push($egod,$vote);
+        $egod[] = $vote;
         break;
       case 'MAT':
-        array_push($mat,$vote);
+        $mat[] = $vote;
         break;  
       case 'SGBD':
-          array_push($sgbd,$vote);
-          break;
+        $sgbd[] = $vote;
+        break;
       case 'SPORT':
-          array_push($sport,$vote);
-          break;
+        $sport[] = $vote;
+        break;
           
       
       default:
        echo "vous ne verrez jamais ce message";
         break;
     }
+  }
+
+  function getAcda()
+  {
+    return $this->acda;
   }
 }
 
@@ -133,6 +138,8 @@ function getInfoVote()
             echo $obj->$test->$mat[$k];
             echo "<br>";
           }
+          echo "gettttttttttttttttttttttttttttttttttttttttttttttttt<br>";
+          echo $votant[$i]->getAcda();
          
          
         }

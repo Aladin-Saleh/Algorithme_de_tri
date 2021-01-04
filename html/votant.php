@@ -1,5 +1,25 @@
 <?php
+class VotantData
+{
 
+  //exemple seulement pour acda
+  private $nom;
+  private $score = 0;
+  public function __construct($n)
+  {
+    $this->nom = $n;
+    
+
+  }
+
+  function isVotant($nom)
+  {
+    if ($this->nom ==$nom ) {
+      $this->score++;
+    }
+  }
+ 
+}
 class Votant 
 {
 
@@ -15,10 +35,9 @@ private $art = array();
 private $sport = array();
 private $mat = array();
 
-
   public function __construct($nom,$acda,$asr,$apl,$mat,$ang,$ec,$egod,$sgbd,$art,$sport)
   {
-    $this->nom = $nom;
+    $this->name = $nom;
     $this->acda = $acda;
     $this->ang = $ang;
     $this->apl = $apl;
@@ -31,7 +50,6 @@ private $mat = array();
     $this->sport = $sport;
   }
 
-
   function setClass($matiere,$vote)
   {
     switch ($matiere) 
@@ -40,8 +58,7 @@ private $mat = array();
         $i = 0;
         if ($this->acda[$i] != null) {
           $i++;
-          echo $i;
-          echo "<br>";
+         
         }
         else
         {
@@ -202,6 +219,7 @@ function setInfoVote()
     $test = $tab[$i];
     $votant[$i] = new Votant($test,null,null,null,null,null,null,null,null,null,null);
     echo $test;
+    $votantData[$i] = new VotantData($test);//pas fini
     echo "<br>------------------------<br>";
 
     for ($j=0; $j < count($matiere); $j++) 
@@ -215,6 +233,7 @@ function setInfoVote()
           for ($k=0; $k < count($obj->$test->$mat) ; $k++) 
           { 
             $votant[$i]->setClass($mat,$obj->$test->$mat[$k]);
+            
             echo $obj->$test->$mat[$k];
             echo "<br>";
           }
@@ -228,7 +247,44 @@ function setInfoVote()
       }
       echo "<br>------------------------<br>";
   }
+
+
+
+
+
  
 }
 setInfoVote();
+
+/*
+1. Créer le graphe p° et la matrice P grâce aux votes.
+    p° = 1/nombre de votants
+    P = matrice = votes de votant 1 vers votant 2 etc...
+
+2. Calculer pⁿ⁺¹ grâce à pⁿ*P
+
+3. Trouver un état stable (si pⁿ⁺¹ = pⁿ)
+    Si état stable précis : p = valeurs stables (= pⁿ⁺¹ = pⁿ)
+    Sinon, s'il oscille entre deux valeurs, faire la moyenne des deux pour trouver un état "stable"
+
+4. Diluer et obtenir l'ordre
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

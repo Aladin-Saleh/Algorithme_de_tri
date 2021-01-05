@@ -4,7 +4,7 @@ class VotantData
 
   //exemple seulement pour acda
   private $nom;
-  private $score = array(0,0,0,0,0,0,0,0,0,0);
+  private $score = 0;
   public function __construct($n)
   {
     $this->nom = $n;
@@ -12,11 +12,14 @@ class VotantData
 
   }
 
-  function upgrade_score($nom_vote)
+  function upgrade_score()
   {
-    if ($this->nom == $nom_vote) {
-        echo "ZEBI";
-    }
+    $this->score++;
+  }
+
+  function get_score()
+  {
+    return $this->score;
   }
  
 }
@@ -253,7 +256,9 @@ function setInfoVote()
       $nom_eleve = $tab[$i];
       $votant_score_obj[$i] = new VotantData($nom_eleve);
       echo $nom_eleve;
-      echo "<br> point de barbieri<br>";
+      echo "<br> point de ";
+      echo $nom_eleve;
+      echo "<br>";
       for ($j=0; $j < 141; $j++) { 
           $mat = $matiere[0];
           $votant_sc = $tab[$j]; 
@@ -264,8 +269,10 @@ function setInfoVote()
               echo $mat;
               echo "<br>";
               echo $obj->$votant_sc->$mat[$k];
-              if ($votant_score_obj[$i] == $obj->$votant_sc->$mat[$k]) {
-                # code...
+              echo "   : ";
+              echo $nom_eleve;
+              if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
+                $votant_score_obj[$i]->upgrade_score();
               }
               echo "<br>";
 
@@ -277,6 +284,11 @@ function setInfoVote()
   }
 
 
+  for ($i=0; $i < 141; $i++) { 
+    //score acda
+    echo $votant_score_obj[$i]->get_score();
+    echo "<br>";
+  }
 
 
 

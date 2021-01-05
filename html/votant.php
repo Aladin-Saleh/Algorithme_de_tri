@@ -4,7 +4,7 @@ class VotantData
 
   //exemple seulement pour acda
   private $nom;
-  private $score = 0;
+  private $score = array(0,0,0,0,0,0,0,0,0,0);
   public function __construct($n)
   {
     $this->nom = $n;
@@ -12,17 +12,16 @@ class VotantData
 
   }
 
-  function isVotant($nom)
+  function upgrade_score($nom_vote)
   {
-    if ($this->nom ==$nom ) {
-      $this->score++;
+    if ($this->nom == $nom_vote) {
+        echo "ZEBI";
     }
   }
  
 }
 class Votant 
 {
-
 private $name;
 private $acda = array();
 private $asr = array();
@@ -218,9 +217,9 @@ function setInfoVote()
   { 
     $test = $tab[$i];
     $votant[$i] = new Votant($test,null,null,null,null,null,null,null,null,null,null);
-    echo $test;
+    //echo $test;
     $votantData[$i] = new VotantData($test);//pas fini
-    echo "<br>------------------------<br>";
+    //echo "<br>------------------------<br>";
 
     for ($j=0; $j < count($matiere); $j++) 
       { 
@@ -228,24 +227,53 @@ function setInfoVote()
         
         if (isset($obj->$test->$mat)) 
         {
-          echo $mat;
-          echo "<br>";
+          //echo $mat;
+          //echo "<br>";
           for ($k=0; $k < count($obj->$test->$mat) ; $k++) 
           { 
             $votant[$i]->setClass($mat,$obj->$test->$mat[$k]);
             
-            echo $obj->$test->$mat[$k];
-            echo "<br>";
+            //echo $obj->$test->$mat[$k];
+            //echo "<br>";
           }
          
         }
         else
         {
-          echo "Pas de vote";
+          //echo "Pas de vote";
           break;
         }
       }
-      echo "<br>------------------------<br>";
+      //echo "<br>------------------------<br>";
+  }
+
+  $nom_eleve = array();
+
+  for ($i=0; $i < 141; $i++) { 
+      $nom_eleve = $tab[$i];
+      $votant_score_obj[$i] = new VotantData($nom_eleve);
+      echo $nom_eleve;
+      echo "<br> point de barbieri<br>";
+      for ($j=0; $j < 141; $j++) { 
+          $mat = $matiere[0];
+          $votant_sc = $tab[$j]; 
+          if (isset($obj->$votant_sc->$mat)) 
+          {
+           
+            for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
+              echo $mat;
+              echo "<br>";
+              echo $obj->$votant_sc->$mat[$k];
+              if ($votant_score_obj[$i] == $obj->$votant_sc->$mat[$k]) {
+                # code...
+              }
+              echo "<br>";
+
+            }
+
+          }
+        
+      }
   }
 
 

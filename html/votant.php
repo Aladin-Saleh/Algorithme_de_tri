@@ -1,5 +1,10 @@
 <?php
-class VotantData
+
+/****************************************/
+/*            Classe Votant             */
+/****************************************/
+
+class VotantData // Class VotantData
 {
 
   //exemple seulement pour acda
@@ -21,9 +26,10 @@ class VotantData
   {
     return $this->score;
   }
- 
-}
-class Votant 
+
+} // Fin classe VotantData
+
+class Votant // Classe Votant
 {
 private $name;
 private $acda = array();
@@ -52,7 +58,7 @@ private $mat = array();
     $this->sport = $sport;
   }
 
-  function setClass($matiere,$vote)
+  function setClass($matiere,$vote) // Méthode qui attribue à un utilisateur ses votes
   {
     switch ($matiere) 
     {
@@ -60,7 +66,6 @@ private $mat = array();
         $i = 0;
         if ($this->acda[$i] != null) {
           $i++;
-         
         }
         else
         {
@@ -174,12 +179,11 @@ private $mat = array();
     }
   }
 
-  function getAcda()
+  function getAcda() // Méthode qui renvoie le tableau acda
   {
     return $this->acda;
   }
-}
-
+} // Fin classe Votant
 
 
 function getListeVotant()
@@ -188,19 +192,18 @@ function getListeVotant()
   $obj = json_decode(file_get_contents('../JSON/liste_votant.json'));
   $array_votant = array();
   $i = 0;
-  foreach($obj as $key=>$val){
+  foreach($obj as $key=>$val){ // On assigne les utilisateurs au tableau array_votant
   //echo $key." , ";
-  $array_votant[$i++] = $key;
+    $array_votant[$i++] = $key;
+  }
 
-}
+  for ($i=0; $i < count($array_votant); $i++) // Affichage des noms des utilisateurs
+  { 
+    //echo $array_votant[$i];
+    //echo "<br>";
+  }
 
-for ($i=0; $i < count($array_votant); $i++) 
-{ 
-  //echo $array_votant[$i];
-  //echo "<br>";
-}
-
-return $array_votant;
+  return $array_votant;
 
 }
 
@@ -211,37 +214,37 @@ function setInfoVote()
   
   $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
   $tab = array();
-  $tab = getListeVotant();
+  $tab = getListeVotant();              // Le tableau tab contient les noms des utilisateurs
 
   $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
 
 
-  for ($i=0; $i <count($tab) ; $i++) 
+  for ($i=0; $i <count($tab) ; $i++)    // Pour chaque utilisateur
   { 
-    $test = $tab[$i];
-    $votant[$i] = new Votant($test,null,null,null,null,null,null,null,null,null,null);
+    $test = $tab[$i];                         // On assigne la variable test à l'utilisateur courant
+    $votant[$i] = new Votant($test,null,null,null,null,null,null,null,null,null,null); // On crée un votant qui a pour nom le nom de récupéré plus haut
     //echo $test;
-    $votantData[$i] = new VotantData($test);//pas fini
+    $votantData[$i] = new VotantData($test);  // Pas fini
     //echo "<br>------------------------<br>";
 
-    for ($j=0; $j < count($matiere); $j++) 
+    for ($j=0; $j < count($matiere); $j++)    // Pour chaque matière
       { 
-        $mat = $matiere[$j];
+        $mat = $matiere[$j];                        // On assigne la variable mat à la matière courante
         
-        if (isset($obj->$test->$mat)) 
+        if (isset($obj->$test->$mat))               // Si l'utilisateur a voté
         {
           //echo $mat;
           //echo "<br>";
-          for ($k=0; $k < count($obj->$test->$mat) ; $k++) 
+          for ($k=0; $k < count($obj->$test->$mat) ; $k++) // Pour toutes les personnes pour qui l'utilisateur a voté,
           { 
-            $votant[$i]->setClass($mat,$obj->$test->$mat[$k]);
+            $votant[$i]->setClass($mat,$obj->$test->$mat[$k]);    // On attribue les votes à l'utilisateur
             
             //echo $obj->$test->$mat[$k];
             //echo "<br>";
           }
          
         }
-        else
+        else                                        // Sinon
         {
           //echo "Pas de vote";
           break;
@@ -252,12 +255,11 @@ function setInfoVote()
 
   $nom_eleve = array();
 
-  for ($i=0; $i < 141; $i++) { 
-      $nom_eleve = $tab[$i];
+  for ($i=0; $i < 141; $i++) {  // Pour chaque élève 
+      $nom_eleve = $tab[$i];    // On attribue la variable nom_eleve à l'élève courant
       $votant_score_obj[$i] = new VotantData($nom_eleve);
       echo $nom_eleve;
-      echo "<br> point de ";
-      echo $nom_eleve;
+      echo "<br> point de $nom_eleve";
       echo "<br>";
       for ($j=0; $j < 141; $j++) { 
           $mat = $matiere[0];
@@ -283,17 +285,57 @@ function setInfoVote()
       }
   }
 
-
   for ($i=0; $i < 141; $i++) { 
     //score acda
     echo $votant_score_obj[$i]->get_score();
     echo "<br>";
   }
 
-
-
- 
 }
+
+function getVotesMatiere($matiere)
+{
+  echo $matiere;
+  switch ($matiere) 
+    {
+      case 'ACDA':
+        echo $acda;
+        break;
+      case 'APL':
+        echo $apl;
+        break;
+      case 'ASR':
+        echo $asr;
+        break;
+      case 'ANG':
+        echo $ang;
+        break;  
+      case 'ART':
+        echo $art;
+        break;
+      case 'EC':
+        echo $ec;
+        break;
+      case 'EGOD':
+        echo $egod;
+        break;
+      case 'MAT':
+        echo $mat;
+        break;  
+      case 'SGBD':
+        echo $sgbd;
+        break;
+      case 'SPORT':
+        echo $sport;
+        break;
+          
+      
+      default:
+       echo "vous ne verrez jamais ce message";
+        break;
+    }
+}
+
 setInfoVote();
 
 /*

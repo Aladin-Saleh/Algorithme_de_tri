@@ -16,7 +16,7 @@ class VotantData // Class VotantData
 
   }
 
-  function upgrade_scoreV2($matiere,$nombre_de_vote_emis) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
+  function upgrade_score($matiere,$nombre_de_vote_emis) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
   {
     $this->score[$matiere] += $this->score[$matiere] * (1/$nombre_de_vote_emis);
   }
@@ -131,7 +131,7 @@ function setPoint()
           {
             for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
               if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
-                $votant_score_obj[$i]->upgrade_scoreV2($l,count($obj->$votant_sc->$mat));
+                $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
                 
               }
               //echo "<br>";

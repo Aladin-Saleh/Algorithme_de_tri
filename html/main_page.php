@@ -26,7 +26,7 @@
 </br>
 
     <div style="column-count: 2; text-align: center;">
-        <form name="checkbox_matiere">
+        <form name="checkbox_matiere" method="post" action="votant.php">
             <input type="checkbox" id="math" name="math" value="math">
             <label for="math"> Math</label><br>
     
@@ -50,16 +50,22 @@
     
             <input type="checkbox" id="APL" name="APL" value="APL">
             <label for="APL" > APL</label><br>
+
+            <input type="checkbox" id="ART" name="ART" value="ART">
+            <label for="ART" > ART</label><br>
+
+            <input type="checkbox" id="SPORT" name="SPORT" value="SPORT">
+            <label for="SPORT" > SPORT</label><br>
+
+            <button type="submit" style="text-align: center;">
+              <p>afficher le résultat</p>
+            </button>
         </form>
         
 
         
         
       </div>
-
-      <button onclick="getCheckbox()" style="text-align: center;">
-        <p>afficher le résultat</p>
-      </button>
     
 </body>
 </html>

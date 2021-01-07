@@ -75,7 +75,7 @@
     $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
 
     $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
-    echo count($obj->saleh->ACDA);
+    
 
     /* P°=1/141
     P°={1/141, 1/141, 1/141}
@@ -109,7 +109,7 @@
       }
     }
 
-    for ($i=0; $i < count($tab); $i++) { 
+    /*for ($i=0; $i < count($tab); $i++) { 
 
       $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
       $nom_eleve = $tab[$i];
@@ -123,24 +123,34 @@
         echo "<br>";
       }
       echo "------------------------------------------------<br>";
-    }
+    }*/
   
     
 
     $nom_eleve;
     $tab = array();
     $tab = getListeVotant();
+    $premier_score = $votant_score_obj[0]->get_score(7);
+    $premier_nom;
     $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
     for ($i=0; $i < count($tab); $i++) {
       $nom_eleve = $tab[$i];
+      if ($votant_score_obj[$i]->get_score(7) > $premier_score ) {
+        $premier_score = $votant_score_obj[$i]->get_score(7);
+        $premier_nom = $nom_eleve;
+      }
       
-      echo $nom_eleve;
+      
+      
+    }
+
+      echo "Le plus fort c'est lui ! <br>";
+      echo $premier_nom;
       echo " : ";
       echo "maths";
       echo " = ";
-      echo $votant_score_obj[$i]->get_score(7);
+      echo $premier_score;
       echo "<br>";
-    }
 
     
 

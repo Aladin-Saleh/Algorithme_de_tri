@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<?php
-		include('votant.php');
-	
-?>
+
 <link rel="stylesheet" href="http://www.iut-fbleau.fr/css/tacit.css">
 <link rel="stylesheet" href="../css/style.css">
 <script src="http://www.iut-fbleau.fr/projet/maths/?f=pagerank.js"></script>
@@ -68,4 +65,9 @@
       </div>
     
 </body>
+
+<?php
+		include('votant.php');
+	
+?>
 </html>

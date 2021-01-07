@@ -27,48 +27,7 @@
 
   } // Fin classe VotantData
 
-  function getVotesMatiere($matiere)
-  {
-    echo $matiere;
-    switch ($matiere) 
-    {
-      case 'ACDA':
-        echo $acda;
-        break;
-      case 'APL':
-        echo $apl;
-        break;
-      case 'ASR':
-        echo $asr;
-        break;
-      case 'ANG':
-        echo $ang;
-        break;  
-      case 'ART':
-        echo $art;
-        break;
-      case 'EC':
-        echo $ec;
-        break;
-      case 'EGOD':
-        echo $egod;
-        break;
-      case 'MAT':
-        echo $mat;
-        break;  
-      case 'SGBD':
-        echo $sgbd;
-        break;
-      case 'SPORT':
-        echo $sport;
-        break;
-
-
-      default:
-        echo "vous ne verrez jamais ce message";
-        break;
-    }
-  }
+  
 
 
 
@@ -165,26 +124,53 @@
       }
       echo "------------------------------------------------<br>";
     }
+  
+    
+
+    $nom_eleve;
+    $tab = array();
+    $tab = getListeVotant();
+    $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
+    for ($i=0; $i < count($tab); $i++) {
+      $nom_eleve = $tab[$i];
+      
+      echo $nom_eleve;
+      echo " : ";
+      echo "maths";
+      echo " = ";
+      echo $votant_score_obj[$i]->get_score(7);
+      echo "<br>";
+    }
+
+    
 
   }
 
   setPoint();
 
-  if(isset($_POST["math"]) || isset($_POST["anglais"]) || isset($_POST["EC"]) || isset($_POST["EGOD"]) || isset($_POST["ASR"]) || isset($_POST["ACDA"]) || isset($_POST["SGBD"]) || isset($_POST["APL"]) || isset($_POST["ART"]) || isset($_POST["SPORT"])) {
-      $nom_eleve;
-      $tab = array();
-      $tab = getListeVotant();
-      $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
-      for ($i=0; $i < count($tab); $i++) {
-        $nom_eleve = $tab[$i];
-        $votant_score_obj[$i] = new VotantData($nom_eleve);
-        echo $nom_eleve;
-        echo " : ";
-        echo "maths";
-        echo " = ";
-        echo $votant_score_obj[$i]->get_score(7);
-        echo "<br>";
-      }
-  }
+ function getScore()
+ {
+
+  if(isset($_POST["math"]) || isset($_POST["anglais"]) || isset($_POST["EC"]) || isset($_POST["EGOD"]) || isset($_POST["ASR"]) || isset($_POST["ACDA"]) || isset($_POST["SGBD"]) || isset($_POST["APL"]) || isset($_POST["ART"]) || isset($_POST["SPORT"])) 
+  {
+    $nom_eleve;
+    $tab = array();
+    $tab = getListeVotant();
+    $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
+    for ($i=0; $i < count($tab); $i++) {
+      $nom_eleve = $tab[$i];
+      $votant_score_obj[$i] = new VotantData($nom_eleve);
+      echo $nom_eleve;
+      echo " : ";
+      echo "maths";
+      echo " = ";
+      echo $votant_score_obj[$i]->get_score(7);
+      echo "<br>";
+    }
+}
+
+ }
+
+ 
 
 ?>

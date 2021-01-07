@@ -9,7 +9,7 @@ class VotantData // Class VotantData
 
   //exemple seulement pour acda
   private $nom;
-  private $score = 0;
+  private $score = array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
   public function __construct($n)
   {
     $this->nom = $n;
@@ -17,14 +17,14 @@ class VotantData // Class VotantData
 
   }
 
-  function upgrade_score()
+  function upgrade_score($matiere) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
   {
-    $this->score++;
+    $this->score[$matiere] = $this->score[$matiere] + 1;
   }
 
-  function get_score()
+  function get_score($matiere)
   {
-    return $this->score;
+    return $this->score[$matiere];
   }
 
 } // Fin classe VotantData
@@ -253,43 +253,72 @@ function setInfoVote()
       //echo "<br>------------------------<br>";
   }
 
-  $nom_eleve = array();
+  $nom_eleve;
 
-  for ($i=0; $i < 141; $i++) {  // Pour chaque élève 
-      $nom_eleve = $tab[$i];    // On attribue la variable nom_eleve à l'élève courant
+  for ($i=0; $i < count($tab); $i++) { 
+      $nom_eleve = $tab[$i];
       $votant_score_obj[$i] = new VotantData($nom_eleve);
+      /*echo $nom_eleve;
+      echo "<br> point de ";
       echo $nom_eleve;
-      echo "<br> point de $nom_eleve";
-      echo "<br>";
-      for ($j=0; $j < 141; $j++) { 
-          $mat = $matiere[0];
+      echo "<br>";*/
+      for ($j=0; $j < count($tab); $j++) { 
+        for($l = 0; $l < 10; $l++){
+          $mat = $matiere[$l];
           $votant_sc = $tab[$j]; 
           if (isset($obj->$votant_sc->$mat)) 
           {
            
             for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
-              echo $mat;
+              /*echo $mat;
               echo "<br>";
               echo $obj->$votant_sc->$mat[$k];
               echo "   : ";
-              echo $nom_eleve;
+              echo $nom_eleve;*/
               if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
-                $votant_score_obj[$i]->upgrade_score();
+                $votant_score_obj[$i]->upgrade_score($l);
               }
-              echo "<br>";
+              //echo "<br>";
 
             }
 
           }
-        
+        }
       }
+  }
+
+
+  for ($i=0; $i < count($tab); $i++) { 
+    //score acda
+    $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
+    $nom_eleve = $tab[$i];
+    for($j = 0; $j < 10; $j++) {
+      echo $matiere[$j];
+      echo " : ";
+      echo $nom_eleve;
+      echo " = ";
+      echo $votant_score_obj[$i]->get_score($j);
+      echo "<br>";
+    }
   }
 
   for ($i=0; $i < 141; $i++) { 
     //score acda
-    echo $votant_score_obj[$i]->get_score();
-    echo "<br>";
+    for($j = 0; $j < 10; $j++) {
+      echo $votant_score_obj[$i]->get_score($j);
+      echo "<br>";
+    }
   }
+
+ /* P°=1/141
+  P°={1/141, 1/141, 1/141}
+
+  [0,   1/3, 0,   1/3, 1/3, 0,   0,   0
+   1/5, 0,   1/5, 1/5, 0,   1/5, 1/5, 0
+   0,   0,   1/2, 0,   1/2, 0,   0,   0 
+  ]
+
+  P1={1/141*1/5, }*/
 
 }
 

@@ -1,17 +1,12 @@
 class Votant_test
 {
     //Prototype
-    constructor(nom,acda = [],asr = [], apl = [],math = [],anglais = [],ec = [], egod = [],sgbd = [])
+    
+    score = array(1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141);
+    constructor(nom)
     {
         this.nom = nom;
-        this.acda = acda;
-        this.asr = asr;
-        this.sgbd =sgbd;
-        this.apl =apl;
-        this.ec =ec;
-        this.anglais =anglais;
-        this.egod =egod;
-        this.math =math;
+      
     }
 }
 

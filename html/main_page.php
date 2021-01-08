@@ -65,9 +65,4 @@
       </div>
     
 </body>
-
-<?php
-		include('votant.php');
-	
-?>
 </html>

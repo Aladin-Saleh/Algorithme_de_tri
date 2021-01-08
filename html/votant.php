@@ -125,7 +125,7 @@
       }
     }*/
 
-    for ($i=0; $i < count($tab); $i++) { 
+    /*for ($i=0; $i < count($tab); $i++) { 
 
       $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
       $nom_eleve = $tab[$i];
@@ -139,7 +139,7 @@
         echo "<br>";
       }
       echo "------------------------------------------------<br>";
-    }
+    }*/
     return $votant_score_obj;
   }
 

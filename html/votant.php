@@ -42,14 +42,15 @@
 
     function upgrade_score($matiere,$nombre_de_vote_emis) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
     {
-      $this->score[$matiere] += $this->score[$matiere] * 0.85 + 0.15 (1/$nombre_de_vote_emis);
+      //$this->score[$matiere] += $this->score[$matiere] * 0.85 + 0.15 (1/$nombre_de_vote_emis);
+      $this->score[$matiere] += $this->score[$matiere] * (1/$nombre_de_vote_emis);
     }
 
     function diluer_score($nombre_de_vote_emis) {
       $alpha = 0.15;
-      echo "diluage";
+      //echo "diluage";
       for($i = 0; $i < 10; $i++){
-        $this->score[$i] = (1-$alpha) * $this->score[$i] + ($alpha * (1/$nombre_de_vote_emis));
+        $this->score[$i] = ((1-$alpha) * $this->score[$i] + (($alpha) * 1/$nombre_de_vote_emis));
       }
     }
 
@@ -91,7 +92,7 @@
 
     $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
 
-    for ($a=0; $a <50 ; $a++) { 
+    for ($a=0; $a <10 ; $a++) { 
       for ($i=0; $i < count($tab); $i++) { 
         $nom_eleve = $tab[$i];
         $votant_score_obj[$i] = new VotantData($nom_eleve);
@@ -99,27 +100,32 @@
           for($l = 0; $l < 10; $l++){
             $mat = $matiere[$l];
             $votant_sc = $tab[$j]; 
-            if (isset($obj->$votant_sc->$mat)) 
-            {
-              for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
-                if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
-                  $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
+            if ($votant_sc != $nom_eleve) {
+              
+              if (isset($obj->$votant_sc->$mat)) 
+              {
+                for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
+                  if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
+                    $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
+                    //$votant_score_obj[$i]->diluer_score(count($obj->$votant_sc->$mat));
+                  }
+                  //echo "<br>";
                 }
-                //echo "<br>";
               }
+              
             }
           }
         }
       }
     }
-
+/*
     for($m = 0; $m < count($votant_score_obj); $m++) {
       if (isset($obj->$votant_sc->$mat)) {
         $votant_score_obj[$m]->diluer_score(count($obj->$votant_sc->$mat));
       }
-    }
+    }*/
 
-    /*for ($i=0; $i < count($tab); $i++) { 
+    for ($i=0; $i < count($tab); $i++) { 
 
       $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
       $nom_eleve = $tab[$i];
@@ -133,7 +139,7 @@
         echo "<br>";
       }
       echo "------------------------------------------------<br>";
-    }*/
+    }
     return $votant_score_obj;
   }
 

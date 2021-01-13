@@ -34,7 +34,9 @@
 
     //exemple seulement pour acda
     private $nom;
-    private $score = array(1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141);
+    private $poids = 1/141;
+    private $score = array(1/141 * 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141);
+    //private $score = array(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
     public function __construct($n)
     {
       $this->nom = $n;
@@ -43,7 +45,8 @@
     function upgrade_score($matiere,$nombre_de_vote_emis) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
     {
       //$this->score[$matiere] += $this->score[$matiere] * 0.85 + 0.15 (1/$nombre_de_vote_emis);
-      $this->score[$matiere] += $this->score[$matiere] * (1/$nombre_de_vote_emis);
+      
+      $this->score[$matiere] +=  $this->poids * (1/$nombre_de_vote_emis);
     }
 
     function diluer_score($nombre_de_vote_emis) {
@@ -54,6 +57,11 @@
       }
     }
 
+    function setPoids($new_value)
+    {
+      $this->poids = $new_value;
+    }
+
     function get_score($matiere)
     {
       return $this->score[$matiere];
@@ -61,6 +69,8 @@
 
   } // Fin classe VotantData
 
+
+  
   
   function getListeVotant()
   {
@@ -83,6 +93,10 @@
 
   }
 
+ 
+
+
+  
   function setPoint()
   {
     $nom_eleve;
@@ -92,7 +106,8 @@
 
     $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
 
-    for ($a=0; $a <10 ; $a++) { 
+    for ($s=0; $s < 50; $s++) { 
+
       for ($i=0; $i < count($tab); $i++) { 
         $nom_eleve = $tab[$i];
         $votant_score_obj[$i] = new VotantData($nom_eleve);
@@ -107,7 +122,7 @@
                 for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
                   if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
                     $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
-                    //$votant_score_obj[$i]->diluer_score(count($obj->$votant_sc->$mat));
+                   
                   }
                   //echo "<br>";
                 }
@@ -116,16 +131,25 @@
             }
           }
         }
+        for ($x=0; $x < 10; $x++) { 
+          $votant_score_obj[$i]->setPoids($votant_score_obj[$i]->get_score($x));
+        }
+
       }
+
+
     }
-/*
+      
+    
+
     for($m = 0; $m < count($votant_score_obj); $m++) {
       if (isset($obj->$votant_sc->$mat)) {
+
         $votant_score_obj[$m]->diluer_score(count($obj->$votant_sc->$mat));
       }
-    }*/
+    }
 
-    /*for ($i=0; $i < count($tab); $i++) { 
+    for ($i=0; $i < count($tab); $i++) { 
 
       $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
       $nom_eleve = $tab[$i];
@@ -139,7 +163,7 @@
         echo "<br>";
       }
       echo "------------------------------------------------<br>";
-    }*/
+    }
     return $votant_score_obj;
   }
 
@@ -153,6 +177,7 @@
       $nom_eleve;
       $tab = array();
       $tab = getListeVotant();
+      $top_score = array();
       $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
       $votant_score_obj = setPoint();
       if(isset($_POST["ACDA"])) {

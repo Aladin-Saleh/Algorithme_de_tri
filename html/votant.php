@@ -1,5 +1,6 @@
 <?php
 
+echo count(getListeVotant())."<br>";
 /*
  * 1. Créer le graphe p° et la matrice P grâce aux votes.
  * p° = 1/nombre de votants
@@ -34,26 +35,38 @@
 
     //exemple seulement pour acda
     private $nom;
-    private $poids = 1/141;
-    private $score = array(1/141 * 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141, 1/141* 1/141);
-    //private $score = array(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+   
+    private $poids = 1/143;
+    //private $score = array(1/141 , 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141, 1/141);
+    //private $score = array(10,10,10,10,10,10,10,10,10,10);
+    private $score = array(1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143);
+    //private $score = array(0,0,0,0,0,0,0,0,0,0);
     public function __construct($n)
     {
       $this->nom = $n;
+
+
     }
 
     function upgrade_score($matiere,$nombre_de_vote_emis) // 0 = acda, 1 = anglais, 2 = apl, 4 = art, 4 = asr, 5 = ec, 6 = egod, 7 = maths, 8 = sgbd, 9 = sport
     {
-      //$this->score[$matiere] += $this->score[$matiere] * 0.85 + 0.15 (1/$nombre_de_vote_emis);
-      
-      $this->score[$matiere] +=  $this->poids * (1/$nombre_de_vote_emis);
+      //$this->score[$matiere] += $this->score[$matiere] *(1/$nombre_de_vote_emis);
+      $this->score[$matiere] += $this->score[$matiere] *(1/$nombre_de_vote_emis);
+      //$this->score[$matiere] +=  $this->poids * $nombre_de_vote_emis;
     }
 
-    function diluer_score($nombre_de_vote_emis) {
+  /*  function diluer_score($nombre_de_vote_emis) {
       $alpha = 0.15;
       //echo "diluage";
       for($i = 0; $i < 10; $i++){
         $this->score[$i] = ((1-$alpha) * $this->score[$i] + (($alpha) * 1/$nombre_de_vote_emis));
+      }
+    } */
+    function diluer_score() {
+      $alpha = 0.15;
+      //echo "diluage";
+      for($i = 0; $i < 10; $i++){
+        $this->score[$i] = ((1-$alpha) * $this->score[$i] )+ $alpha ;
       }
     }
 
@@ -65,6 +78,11 @@
     function get_score($matiere)
     {
       return $this->score[$matiere];
+    }
+
+    function get_nom()
+    {
+      return $this->nom;
     }
 
   } // Fin classe VotantData
@@ -106,7 +124,7 @@
 
     $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
 
-    for ($s=0; $s < 50; $s++) { 
+     
 
       for ($i=0; $i < count($tab); $i++) { 
         $nom_eleve = $tab[$i];
@@ -115,12 +133,14 @@
           for($l = 0; $l < 10; $l++){
             $mat = $matiere[$l];
             $votant_sc = $tab[$j]; 
-            if ($votant_sc != $nom_eleve) {
+            
               
               if (isset($obj->$votant_sc->$mat)) 
               {
+                
                 for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
                   if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
+                  
                     $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
                    
                   }
@@ -128,26 +148,22 @@
                 }
               }
               
-            }
+            
           }
         }
-        for ($x=0; $x < 10; $x++) { 
-          $votant_score_obj[$i]->setPoids($votant_score_obj[$i]->get_score($x));
-        }
+       
 
       }
 
+      for ($i=0; $i <count($tab) ; $i++) { 
+        $votant_score_obj[$i]->diluer_score();
+      }
 
-    }
-      
+
     
 
-    for($m = 0; $m < count($votant_score_obj); $m++) {
-      if (isset($obj->$votant_sc->$mat)) {
+    
 
-        $votant_score_obj[$m]->diluer_score(count($obj->$votant_sc->$mat));
-      }
-    }
 
     for ($i=0; $i < count($tab); $i++) { 
 

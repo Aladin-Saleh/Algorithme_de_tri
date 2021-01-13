@@ -10,6 +10,7 @@ class Votant_test
     }
 }
 
+
 //console.log()
 //acda = JSON.parse("ACDA");
 //console.log(acda);

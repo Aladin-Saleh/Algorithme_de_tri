@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<link rel="stylesheet" href="http://www.iut-fbleau.fr/css/tacit.css">
-<link rel="stylesheet" href="../css/style.css">
-<script src="http://www.iut-fbleau.fr/projet/maths/?f=pagerank.js"></script>
-<script src="http://www.iut-fbleau.fr/projet/maths/?f=logins.js"></script>
-<script src="../js/test.js"></script>
-<script src="../js/Votant.js"></script>
-
 <head>
+    <link rel="stylesheet" href="http://www.iut-fbleau.fr/css/tacit.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="http://www.iut-fbleau.fr/projet/maths/?f=pagerank.js"></script>
+    <script src="http://www.iut-fbleau.fr/projet/maths/?f=logins.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Joli Classificateur</title>
@@ -38,7 +35,7 @@
     
             <input type="checkbox" id="ASR" name="ASR" value="ASR">
             <label for="EGOD"> ASR</label><br>
-    
+
             <input type="checkbox" id="ACDA" name="ACDA" value="ACDA">
             <label for="ACDA"> ACDA</label><br>
     

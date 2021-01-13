@@ -173,7 +173,6 @@
 
       for($i = 0; $i < count($coche); $i++) {
         if(isset($_POST[$coche[$i]])) {
-          //echo "$coche[$i] a été coché<br>";
           array_push($tab_matieres, $i);
         }
       }
@@ -204,29 +203,35 @@
       }
     }
 
-    /*echo "<br>Le plus fort c'est lui ! <br>";
-    echo $premier_nom;
-    echo " : ";
-    for($i = 0; $i < count($choix); $i++) {
+    echo '<!DOCTYPE html>
+    <html lang="fr">
+    
+    <head>
+        <link rel="stylesheet" href="../css/style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Résultats</title>
+    
+        <h1 style="text-align: center;">RÉSULTATS</h1>
+    </head>
+    <body>
+        ';
+  
+    echo "Matières sélectionnées : ";
+    for($i = 0; $i < count($choix)-1; $i++) {
       echo $matiere[$choix[$i]];
-      if(count($choix) > 1)
-        echo ", ";
+      echo ", ";
     }
-    echo " = ";
-    echo $premier_score;
-    echo "<br><br><br>";
-    echo "Les autres : <br>";*/
-    for($i = 0; $i < count($choix); $i++) {
-      echo $matiere[$choix[$i]];
-      if(count($choix) > 1)
-        echo ", ";
-    }
-    echo "<table>";
+    echo $matiere[$choix[count($choix)-1]];
+
+    echo '<table class="greyGridTable">';
+    echo "<thead><tr><th>Rang</th><th>Nom</th><th>Score</th></thead>";
     $count = 1;
     foreach ($score_eleves as $nom_eleve => $score) {
-      echo "<tr><th>$count</th><th>$nom_eleve</th><th>$score</th></tr>";
+      echo "<tr><td>$count</td><td>$nom_eleve</td><td>$score</td></tr>";
       $count++;
     }
+    echo "</table>";
   }
 
 ?>

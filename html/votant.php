@@ -208,6 +208,7 @@
     
     <head>
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Résultats</title>
@@ -225,10 +226,12 @@
     echo $matiere[$choix[count($choix)-1]];
 
     echo '<table class="greyGridTable">';
-    echo "<thead><tr><th>Rang</th><th>Nom</th><th>Score</th></thead>";
+    echo "<thead><tr><th>Rang</th><th>Nom</th><th>Score</th><th>Progression</th></thead>";
     $count = 1;
     foreach ($score_eleves as $nom_eleve => $score) {
-      echo "<tr><td>$count</td><td>$nom_eleve</td><td>$score</td></tr>";
+      echo '<tr><td>'.$count.'</td><td>'.$nom_eleve.'</td><td>'.$score.'</td><td><div class="w3-light-grey">
+      <div class="w3-container w3-grey w3-center" style="width:'.exp($score*25).'%">&nbsp;</div>
+    </div></td></tr>';
       $count++;
     }
     echo "</table>";

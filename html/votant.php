@@ -15,15 +15,15 @@
  * 4. Diluer et obtenir l'ordre
  */
 
-/* P°=1/141
- * P°={1/141, 1/141, 1/141}
+/* P°=1/143
+ * P°={1/143, 1/143, 1/143}
  *
  * [0,   1/3, 0,   1/3, 1/3, 0,   0,  0
  * 1/5, 0,   1/5, 1/5, 0,   1/5, 1/5, 0
  * 0,   0,   1/2, 0,   1/2, 0,   0,   0 
  * ]
  *
- * P1={1/141*1/5, }
+ * P1={1/141*1/5,...}
  */
 
   /****************************************/
@@ -33,24 +33,29 @@
   class VotantData // Class VotantData
   {
 
-    //exemple seulement pour acda
+   //On stocke tout les votants dans une classe VotantData
+   //Un votant a un nom,score et poids.
     private $nom;
    
-    private $poids = 1/143;
-    private $score = array(1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143);
+    private $poids = array(1/143,1/143,1/143,1/143,1/143,1/143,1/143,1/143,1/143,1/143);//P0 le poids de chaque "page" est le meme 1/(le nombre d'eleve(page))
+    private $score = array(1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143,1/143 * 1/143);//au debut P0 le score de tout le monde est 1/143 * 1/143
     public function __construct($n)
     {
       $this->nom = $n;
 
-
     }
 
-    function upgrade_score($matiere,$nombre_de_vote_emis) 
+    function upgrade_score($matiere,$nombre_de_vote_emis)//Cette fonction est appelle lors du vote
     {
-      $this->score[$matiere] += 0.15/143 + 0.85*(1/143);
+       //si 0.85=d, a=1-d=0.15
+      //on multiplie par 1-a=0.85, et on rajoute 0.15 aux scores
+      //la hiérarchie est respectée
+      $this->score[$matiere] += (0.15/$this->poids[$matiere]) + 0.85*(1/$nombre_de_vote_emis);
+     
     }
 
-    function diluer_score() {
+    function diluer_score() {//Premier fonction de test pour diluer, il se peut quelle ne soit pas utiliser voir supprimer
+     
       $alpha = 0.15;
       //echo "diluage";
       for($i = 0; $i < 10; $i++){
@@ -58,9 +63,14 @@
       }
     }
 
-    function setPoids($new_value)
+    function reduce_score($matiere)
     {
-      $this->poids = $new_value;
+      $this->score[$matiere] = $this->score[$matiere]/100;
+    }
+
+    function setPoids($indice,$new_value)
+    {
+      $this->poids[$indice] = $new_value;
     }
 
     function get_score($matiere)
@@ -111,28 +121,57 @@
     $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
     $obj = json_decode(file_get_contents('../JSON/www.iut-fbleau.fr.json'));
 
-    for ($i=0; $i < count($tab); $i++) { 
-        $nom_eleve = $tab[$i];
-        $votant_score_obj[$i] = new VotantData($nom_eleve);
-        for ($j=0; $j < count($tab); $j++) { 
-          for($l = 0; $l < 10; $l++){
-            $mat = $matiere[$l];
-            $votant_sc = $tab[$j]; 
-              if (isset($obj->$votant_sc->$mat)) 
-              {
-                for ($k=0; $k <count($obj->$votant_sc->$mat) ; $k++) { 
-                  if ($nom_eleve == $obj->$votant_sc->$mat[$k]) {
-                    $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_sc->$mat));
+    for ($i=0; $i < count($tab); $i++) {
+      //On crée les objet votant
+      $nom_eleve = $tab[$i];
+      $votant_score_obj[$i] = new VotantData($nom_eleve);
+    }
+
+   
+      for ($itteration=0; $itteration < 150; $itteration++) { //On ittere 150 fois pour être le plus précis possible
+        /*
+        *On ittere autant dde fois qu'il ya de votant
+        *On rentre ensuite dans une 2e boucle qui elle aussi ittere autant de fois qu'il y'a de votant
+        *Enfin on compare les votes des votant de la 2e boucle avec le votant de la premiere boucle
+        *Si le nom du votant est le meme cela veut dire qu'il a reçu un vote, on lui upgrade donc son score
+        *Une fois que tout les votes ont été recuperer, on set les nouveaux poids et on recommence 
+        */
+        for ($i=0; $i < count($tab); $i++) { 
+          $nom_eleve = $tab[$i];
+          for ($j=0; $j < count($tab); $j++) { 
+            for($l = 0; $l < 10; $l++){
+              $mat = $matiere[$l];
+              $votant_nom = $tab[$j]; 
+               if ($nom_eleve != $votant_nom) {
+                if (isset($obj->$votant_nom->$mat)) 
+                {
+                  for ($k=0; $k <count($obj->$votant_nom->$mat) ; $k++) { 
+                    if ($nom_eleve == $obj->$votant_nom->$mat[$k]) {
+                      $votant_score_obj[$i]->upgrade_score($l,count($obj->$votant_nom->$mat));
+                    }
                   }
                 }
-              }
+               }
+              
+            }
+          }
+         
+          
+          
+        }
+        for ($ind_user=0; $ind_user < count($tab); $ind_user++) { 
+          for ($ind=0; $ind < 10; $ind++) { 
             
+            $votant_score_obj[$ind_user]->setPoids($ind,$votant_score_obj[$ind_user]->get_score($ind));
+            $votant_score_obj[$ind_user]->reduce_score($ind);
           }
         }
+       
+
+
       }
-      for ($i=0; $i <count($tab) ; $i++) { 
-        $votant_score_obj[$i]->diluer_score();
-      }
+
+     
 
       for ($i=0; $i < count($tab); $i++) { 
 
@@ -159,6 +198,7 @@
   }
 
   getScore();
+  
 
   function getScore() {
     if(isset($_POST["math"]) || isset($_POST["anglais"]) || isset($_POST["EC"]) || isset($_POST["EGOD"]) || isset($_POST["ASR"]) || isset($_POST["ACDA"]) || isset($_POST["SGBD"]) || isset($_POST["APL"]) || isset($_POST["ART"]) || isset($_POST["SPORT"])) {

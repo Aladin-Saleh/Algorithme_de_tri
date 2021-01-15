@@ -1,7 +1,8 @@
 <?php
 
-//echo count(getListeVotant())."<br>";
+
 /*
+ * @author Aladin SALEH & Paul MINGUET
  * 1. Créer le graphe p° et la matrice P grâce aux votes.
  * p° = 1/nombre de votants
  * P = matrice = votes de votant 1 vers votant 2 etc...
@@ -84,35 +85,18 @@
     }
 
   } // Fin classe VotantData
-
-
-  
-  
   function getListeVotant()
   {
-
     $obj = json_decode(file_get_contents('../JSON/liste_votant.json'));
     $array_votant = array();
     $i = 0;
     foreach($obj as $key=>$val){ // On assigne les utilisateurs au tableau array_votant
-      //echo $key." , ";
+     
       $array_votant[$i++] = $key;
     }
-
-    /*for ($i=0; $i < count($array_votant); $i++) // Affichage des noms des utilisateurs
-    { 
-      //echo $array_votant[$i];
-      //echo "<br>";
-    }*/
-
     return $array_votant;
-
   }
 
- 
-
-
-  
   function setPoint()
   {
     $nom_eleve;
@@ -126,8 +110,6 @@
       $nom_eleve = $tab[$i];
       $votant_score_obj[$i] = new VotantData($nom_eleve);
     }
-
-   
       for ($itteration=0; $itteration < 10; $itteration++) { //On ittere 10 fois pour être le plus précis possible et que ce ne soit pas trop long
         /*
         *On ittere autant dde fois qu'il ya de votant
@@ -152,48 +134,16 @@
                   }
                 }
                }
-              
             }
           }
-         
-          
-          
         }
         for ($ind_user=0; $ind_user < count($tab); $ind_user++) { 
           for ($ind=0; $ind < 10; $ind++) { 
-            
             $votant_score_obj[$ind_user]->setPoids($ind,$votant_score_obj[$ind_user]->get_score($ind));
             $votant_score_obj[$ind_user]->reduce_score($ind);
           }
         }
-       
-
-
       }
-
-     
-
-      for ($i=0; $i < count($tab); $i++) { 
-
-        $matiere = array("ACDA","ANG","APL","ART","ASR","EC","EGOD","MAT","SGBD","SPORT");
-        $nom_eleve = $tab[$i];
-  
-        //echo $nom_eleve;
-        //echo "<br>";
-        for($j = 0; $j < 10; $j++) {
-          //echo $matiere[$j];
-          //echo " : ";
-          //echo $votant_score_obj[$i]->get_score($j);
-          //echo "<br>";
-        }
-        //echo "------------------------------------------------<br>";
-      }
-
-    
-
-    
-
-
     return $votant_score_obj;
   }
 

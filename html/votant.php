@@ -128,13 +128,13 @@
     }
 
    
-      for ($itteration=0; $itteration < 150; $itteration++) { //On ittere 150 fois pour être le plus précis possible
+      for ($itteration=0; $itteration < 10; $itteration++) { //On ittere 10 fois pour être le plus précis possible et que ce ne soit pas trop long
         /*
         *On ittere autant dde fois qu'il ya de votant
         *On rentre ensuite dans une 2e boucle qui elle aussi ittere autant de fois qu'il y'a de votant
-        *Enfin on compare les votes des votant de la 2e boucle avec le votant de la premiere boucle
-        *Si le nom du votant est le meme cela veut dire qu'il a reçu un vote, on lui upgrade donc son score
-        *Une fois que tout les votes ont été recuperer, on set les nouveaux poids et on recommence 
+        *Enfin on compare les votes des votants de la 2e boucle avec le votant de la premiere boucle
+        *Si le nom du votant est le meme cela veut dire qu'il a reçu un vote, on lui upgrade(augmente) donc son score
+        *Une fois que tout les votes ont été recuperé, on set(défini) les nouveaux poids et on recommence 
         */
         for ($i=0; $i < count($tab); $i++) { 
           $nom_eleve = $tab[$i];
@@ -256,7 +256,7 @@
         <h1 style="text-align: center;">RÉSULTATS</h1>
     </head>
     <body>
-        ';
+        <a href="main_page.php"><button>Retour au choix des matières</button></a><br>';
   
     echo "Matières sélectionnées : ";
     for($i = 0; $i < count($choix)-1; $i++) {
@@ -270,7 +270,7 @@
     $count = 1;
     foreach ($score_eleves as $nom_eleve => $score) {
       echo '<tr><td>'.$count.'</td><td>'.$nom_eleve.'</td><td>'.$score.'</td><td><div class="w3-light-grey">
-      <div class="w3-container w3-grey w3-center" style="width:'.exp($score*25).'%">&nbsp;</div>
+      <div class="w3-container w3-grey w3-center" style="width:'.exp($score*73).'%">&nbsp;</div>
     </div></td></tr>';
       $count++;
     }
